@@ -1,8 +1,26 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Grid/grid.gd" type="Script" id=1]
 [ext_resource path="res://Pieces/Piece Background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://UI/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Assets/aquero/Aquero.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://UI/Camera.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Common Fight.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Daejor-Good_Job!.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Chirp-YAY.wav" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Paige-You_did_it-.wav" type="AudioStream" id=9]
+[ext_resource path="res://UI/Instructions.gd" type="Script" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 35
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 4 )
 
 [node name="Game" type="Node2D"]
 
@@ -26,4 +44,90 @@ __meta__ = {
 [node name="Score" type="Label" parent="HUD"]
 margin_right = 576.0
 margin_bottom = 20.0
-text = "Score: "
+custom_fonts/font = SubResource( 1 )
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="HUD"]
+margin_right = 565.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = " :Time"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="HUD"]
+autostart = true
+
+[node name="Instructions" type="Control" parent="HUD"]
+pause_mode = 2
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1010.0
+color = Color( 0, 0, 0, 0.752941 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Initial_Instructions" type="Label" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1010.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 1
+
+How many points can you score in 60 seconds?"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Countdown_label" type="Label" parent="HUD/Instructions"]
+margin_left = -2.66968
+margin_top = 296.0
+margin_right = 562.33
+margin_bottom = 1010.0
+custom_fonts/font = SubResource( 3 )
+text = "Staring in: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Countdown" type="Timer" parent="HUD/Instructions"]
+autostart = true
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.371
+autoplay = true
+
+[node name="Chirp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Daejor" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Paige" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+[connection signal="timeout" from="HUD/Timer" to="HUD" method="_on_Timer_timeout"]
+[connection signal="timeout" from="HUD/Instructions/Countdown" to="HUD/Instructions" method="_on_Countdown_timeout"]

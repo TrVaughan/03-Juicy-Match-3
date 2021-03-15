@@ -1,7 +1,11 @@
 extends Node
 
 var score = 0
-signal changed
+var time = 0
+
+signal score_changed
+signal time_changed
+
 var scores = {
 	0:0,
 	1:0,
@@ -21,4 +25,11 @@ func _unhandled_input(event):
 
 func change_score(s):
 	score += s
-	emit_signal("changed")
+	var Camera_shake = get_node_or_null("/root/Game/Camera")
+	if Camera:
+		Camera_shake.add_trauma(.5)
+	emit_signal("score_changed")
+
+func change_time():
+	time += 1
+	emit_signal("time_changed")

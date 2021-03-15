@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Pieces/Piece.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Paige.png" type="Texture" id=2]
+
+[node name="Piece" instance=ExtResource( 1 )]
+color = "Paige_scene"
+
+[node name="Piece" parent="." index="0"]
+scale = Vector2( 0.46, 0.46 )
+texture = ExtResource( 2 )
+
+[node name="Select" parent="." index="2"]
+scale = Vector2( 0.46, 0.46 )
+texture = ExtResource( 2 )
